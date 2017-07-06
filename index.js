@@ -1,12 +1,12 @@
 'use strict';
-const isObj = require('is-obj');
+var isObj = require('is-obj');
 
 function getPathSegments(path) {
-	const pathArr = path.split('.');
-	const parts = [];
+	var pathArr = path.split('.');
+	var parts = [];
 
-	for (let i = 0; i < pathArr.length; i++) {
-		let p = pathArr[i];
+	for (var i = 0; i < pathArr.length; i++) {
+		var p = pathArr[i];
 
 		while (p[p.length - 1] === '\\' && pathArr[i + 1] !== undefined) {
 			p = p.slice(0, -1) + '.';
@@ -20,14 +20,14 @@ function getPathSegments(path) {
 }
 
 module.exports = {
-	get(obj, path, value) {
+	get: function (obj, path, value) {
 		if (!isObj(obj) || typeof path !== 'string') {
 			return value === undefined ? obj : value;
 		}
 
-		const pathArr = getPathSegments(path);
+		var pathArr = getPathSegments(path);
 
-		for (let i = 0; i < pathArr.length; i++) {
+		for (var i = 0; i < pathArr.length; i++) {
 			if (!Object.prototype.propertyIsEnumerable.call(obj, pathArr[i])) {
 				return value;
 			}
@@ -51,15 +51,15 @@ module.exports = {
 		return obj;
 	},
 
-	set(obj, path, value) {
+	set: function (obj, path, value) {
 		if (!isObj(obj) || typeof path !== 'string') {
 			return;
 		}
 
-		const pathArr = getPathSegments(path);
+		var pathArr = getPathSegments(path);
 
-		for (let i = 0; i < pathArr.length; i++) {
-			const p = pathArr[i];
+		for (var i = 0; i < pathArr.length; i++) {
+			var p = pathArr[i];
 
 			if (!isObj(obj[p])) {
 				obj[p] = {};
@@ -73,15 +73,15 @@ module.exports = {
 		}
 	},
 
-	delete(obj, path) {
+	delete: function (obj, path) {
 		if (!isObj(obj) || typeof path !== 'string') {
 			return;
 		}
 
-		const pathArr = getPathSegments(path);
+		var pathArr = getPathSegments(path);
 
-		for (let i = 0; i < pathArr.length; i++) {
-			const p = pathArr[i];
+		for (var i = 0; i < pathArr.length; i++) {
+			var p = pathArr[i];
 
 			if (i === pathArr.length - 1) {
 				delete obj[p];
@@ -96,14 +96,14 @@ module.exports = {
 		}
 	},
 
-	has(obj, path) {
+	has: function (obj, path) {
 		if (!isObj(obj) || typeof path !== 'string') {
 			return false;
 		}
 
-		const pathArr = getPathSegments(path);
+		var pathArr = getPathSegments(path);
 
-		for (let i = 0; i < pathArr.length; i++) {
+		for (var i = 0; i < pathArr.length; i++) {
 			if (isObj(obj)) {
 				if (!(pathArr[i] in obj)) {
 					return false;
